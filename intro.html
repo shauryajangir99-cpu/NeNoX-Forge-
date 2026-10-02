@@ -23,16 +23,40 @@
       animation: enter3D 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .card-3d-wrapper {
-      perspective: 1000px;
+      perspective: none;
     }
+
     .card-3d {
-      transition: transform 0.2s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
-      transform-style: preserve-3d;
+      transition:
+        transform 0.50s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.30s ease,
+        box-shadow 0.30s ease;
+      transform-style: flat;
+      will-change: transform;
     }
+
     .card-3d:hover {
+      transform: translateY(-6px);
       border-color: rgba(239, 68, 68, 0.6);
       box-shadow: 0 20px 40px -15px rgba(239, 68, 68, 0.3);
     }
+
+  
+    /* SIMPLE 7PX HOVER FOR APPLY NOW / DISCORD / TAM DETAIL LINKS */
+    .apply-now-link,
+    .discord-link,
+    .tam-detail-link {
+      display: inline-block;
+      transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .apply-now-link:hover,
+    .discord-link:hover,
+    .tam-detail-link:hover {
+      transform: translateY(-7px);
+    }
+
   </style>
 </head>
 <body class="bg-black text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-red-600 selection:text-white">
@@ -228,30 +252,8 @@
     © 2026 Team NeNoX Forge • Built for University Hackathons
   </footer>
 
-  <!-- 3D TILT INTERACTION SCRIPT -->
-  <script>
-    document.querySelectorAll('.card-3d-wrapper').forEach(wrapper => {
-      const card = wrapper.querySelector('.card-3d');
-      
-      wrapper.addEventListener('mousemove', (e) => {
-        const rect = wrapper.getBoundingClientRect();
-        const x = e.clientX - rect.left; 
-        const y = e.clientY - rect.top;  
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = -((y - centerY) / centerY) * 8;
-        const rotateY = ((x - centerX) / centerX) * 8;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-      });
-      
-      wrapper.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
-      });
-    });
-  </script>
+  <!-- SIMPLE SMOOTH CARD HOVER -->
+  <!-- Cards lift only 6px on hover; no mouse-following 3D tilt. -->
 
 </body>
 </html>
